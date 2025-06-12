@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LC Coach Quiz</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      color: white;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 20px;
+      margin-top: 50px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .hidden { display: none; }
+    #result img { max-width: 200px; margin-top: 20px; border-radius: 16px; }
+  </style>
+</head>
+<body>
+  <audio id="leleAudio" src="lele.mp3"></audio>
+  <div class="container">
+    <div id="start">
+      <h2>Select your LC:</h2>
+      <select id="lcSelect">
+        <option value="">-- Select LC --</option>
+        <option value="BU">BU</option>
+        <option value="BV">BV</option>
+        <option value="CJ">CJ</option>
+        <option value="CR">CR</option>
+        <option value="GL">GL</option>
+        <option value="IS">IS</option>
+        <option value="OR">OR</option>
+        <option value="SB">SB</option>
+        <option value="TM">TM</option>
+        <option value="UB">UB</option>
+      </select>
+      <br /><br />
+      <button onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <div id="quiz" class="hidden">
+      <h2 id="question"></h2>
+      <button onclick="answer(true)">True</button>
+      <button onclick="answer(false)">False</button>
+    </div>
+
+    <div id="result" class="hidden">
+      <h2 id="coachMessage"></h2>
+      <img id="coachImage" src="" alt="Coach" />
+      <canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const questions = [
+      { text: "AIESEC is a global youth-run organization.", answer: true },
+      { text: "All exchanges last more than 1 year.", answer: false },
+      { text: "There are 10 Local Committees in Romania.", answer: true },
+      { text: "A coach is selected randomly.", answer: false },
+      { text: "LC stands for Local Committee.", answer: true },
+    ];
+
+    const lcToCoach = {
+      BU: 'Kira', BV: 'Emi', CJ: 'Hanin', CR: 'Cristi',
+      GL: 'Kira', IS: 'Ada', OR: 'Pietrino', SB: 'Eli',
+      TM: 'Claudia', UB: 'Cosmin'
+    };
+
+    let currentQuestion = 0;
+
+    function startQuiz() {
+      const lc = document.getElementById('lcSelect').value;
+      if (!lc) return alert('Please select your LC!');
+
+      document.getElementById('start').classList.add('hidden');
+      document.getElementById('quiz').classList.remove('hidden');
+      showQuestion();
+    }
+
+    function showQuestion() {
+      if (currentQuestion >= questions.length) return endQuiz();
+      document.getElementById('question').innerText = questions[currentQuestion].text;
+    }
+
+    function answer(userAnswer) {
+      currentQuestion++;
+      showQuestion();
+    }
+
+    function endQuiz() {
+      document.getElementById('quiz').classList.add('hidden');
+      document.getElementById('result').classList.remove('hidden');
+      const lc = document.getElementById('lcSelect').value;
+      const coach = lcToCoach[lc];
+      document.getElementById('coachMessage').innerText = `Your Coach is ${coach}`;
+      document.getElementById('coachImage').src = `coaches/${coach.toLowerCase()}.jpg`;
+      document.getElementById('leleAudio').play();
+      confetti({ particleCount: 300, spread: 100 });
+    }
+  </script>
+</body>
+</html>
