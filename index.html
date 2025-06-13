@@ -8,9 +8,10 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Lato', sans-serif;
       color: white;
-      background: url('background.jpg') no-repeat center center fixed;
+      background: url('background.png') no-repeat center center fixed;
+      background-size: cover;
       background-size: cover;
       text-align: center;
     }
@@ -112,9 +113,7 @@
       const lc = document.getElementById('lcSelect').value;
       const coach = lcToCoach[lc];
       document.getElementById('coachMessage').innerText = `🎉🎊 Congratulations! ${coach} is your coach for the next semester 🎊🎉`;
-      - document.getElementById('coachImage').src = `coaches/${coach.toLowerCase()}.png`;
-+ document.getElementById('coachImage').src = `${coach.toLowerCase()}.png`;
-`;
+      document.getElementById('coachImage').src = `${coach.toLowerCase()}.png`;
       document.getElementById('leleAudio').play();
       confetti({ particleCount: 300, spread: 100 });
     }
