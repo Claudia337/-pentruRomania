@@ -111,7 +111,7 @@
       document.getElementById('result').classList.remove('hidden');
       const lc = document.getElementById('lcSelect').value;
       const coach = lcToCoach[lc];
-      document.getElementById('coachMessage').innerText = `Your Coach is ${coach}`;
+      document.getElementById('coachMessage').innerText = `Congratulations! ${coach} is your Coach for next semester!`;
       document.getElementById('coachImage').src = `${coach.toLowerCase()}.png`;
       document.getElementById('leledelaloredenagroza').play();
       confetti({ particleCount: 300, spread: 100 });
